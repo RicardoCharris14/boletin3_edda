@@ -80,16 +80,3 @@ vector<int> searchPattern(string &text, string &pattern) {
 
     return result;
 }
-
-int main() {
-    string txt = "geeksforgeeks";
-    string pat = "geek";
-
-    vector<int> positions = searchPattern(txt, pat);
-    for (int idx : positions) {
-        cout << idx << " ";
-    }
-    cout << endl;
-
-    return 0;
-}
