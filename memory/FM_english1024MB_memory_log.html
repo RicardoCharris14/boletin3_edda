@@ -1,0 +1,433 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+    body { font: 11px sans-serif; }
+    .rule { height: 90%; position: absolute; border-right: 1px dotted #000; text-align: right; }
+</style>
+<title>sdsl memory usage visualization</title>
+<script src="http://d3js.org/d3.v3.js"></script>
+</head>
+<body marginwidth="0" marginheight="0">
+<button><a id="download">Save as SVG</a></button>
+<div class="chart"><div id="visualization"></div></div><script>
+var events = [
+	{
+		"name" : "unknown",
+		"usage" : [
+			[0,0],
+			[175515,0]
+		]
+	},
+	{
+		"name" : "construct CSA",
+		"usage" : [
+			[0,0],
+			[1395,0],
+			[119530,0],
+			[149878,0],
+			[175204,0],
+			[175515,0],
+			[175515,1087841136]
+		]
+	},
+	{
+		"name" : "parse input text",
+		"usage" : [
+			[0,1073741816],
+			[1395,1073741816],
+			[1395,0],
+			[1395,0]
+		]
+	},
+	{
+		"name" : "SA",
+		"usage" : [
+			[1395,1073741816],
+			[1819,1073741816],
+			[1819,5100273616],
+			[2999,5100273616],
+			[2999,5368709064],
+			[117842,5368709064],
+			[117842,5100273616],
+			[119527,5100273616],
+			[119530,0],
+			[119530,0]
+		]
+	},
+	{
+		"name" : "BWT",
+		"usage" : [
+			[119530,1073741816],
+			[120011,1073741816],
+			[120011,1075741840],
+			[149876,1075741840],
+			[149878,0],
+			[149878,0]
+		]
+	},
+	{
+		"name" : "construct CSA",
+		"usage" : [
+			[149878,0],
+			[151600,0],
+			[167687,0],
+			[170716,0],
+			[175204,0],
+			[175204,1087841136]
+		]
+	},
+	{
+		"name" : "construct csa-alpbabet",
+		"usage" : [
+			[149879,1051144],
+			[151599,1051144],
+			[151600,2392],
+			[151600,2392]
+		]
+	},
+	{
+		"name" : "construct wavelet tree",
+		"usage" : [
+			[151600,1050968],
+			[153352,1050968],
+			[153352,613194248],
+			[165189,613194248],
+			[165189,766230072],
+			[165525,766230072],
+			[165545,769503384],
+			[165545,769503384],
+			[165565,770615040],
+			[165565,770615040],
+			[165585,771701424],
+			[165585,771701424],
+			[165605,772734160],
+			[165605,772734160],
+			[165625,773910376],
+			[165625,773910376],
+			[165639,774860920],
+			[165658,774860920],
+			[165678,775548784],
+			[165678,775548784],
+			[165698,776856112],
+			[165698,776856112],
+			[165718,777924664],
+			[165718,777924664],
+			[165738,779033800],
+			[165738,779033800],
+			[165758,780131472],
+			[165758,780131472],
+			[165778,781196784],
+			[165778,781196784],
+			[165798,782339048],
+			[165798,782339048],
+			[165818,783516472],
+			[165818,783516472],
+			[165838,784503848],
+			[165838,784503848],
+			[165858,785620584],
+			[165858,785620584],
+			[165878,786960176],
+			[165878,786960176],
+			[165898,787968520],
+			[165898,787968520],
+			[165918,789122048],
+			[165918,789122048],
+			[165938,790546728],
+			[165938,790546728],
+			[165958,791607128],
+			[165958,791607128],
+			[165978,792405648],
+			[165978,792405648],
+			[165998,793282384],
+			[165998,793282384],
+			[166018,794394072],
+			[166018,794394072],
+			[166037,795353040],
+			[166038,795353040],
+			[166058,796345032],
+			[166058,796345032],
+			[166078,797804752],
+			[166079,797804752],
+			[166099,798856168],
+			[166099,798856168],
+			[166116,799937888],
+			[166119,799937888],
+			[166139,801339032],
+			[166139,801339032],
+			[166159,802612632],
+			[166159,802612632],
+			[166178,803625936],
+			[166180,803625936],
+			[166200,804830568],
+			[166200,804830568],
+			[166220,805967704],
+			[166220,805967704],
+			[166240,807383232],
+			[166240,807383232],
+			[166260,808787608],
+			[166260,808787608],
+			[166280,810531256],
+			[166280,810531256],
+			[166300,811351912],
+			[166300,811351912],
+			[166320,812393512],
+			[166320,812393512],
+			[166340,813859480],
+			[166340,813859480],
+			[166360,814486800],
+			[166360,814486800],
+			[166380,815802832],
+			[166380,815802832],
+			[166400,817160336],
+			[166400,817160336],
+			[166420,818240064],
+			[166422,818240064],
+			[166442,819451008],
+			[166442,819451008],
+			[166462,820792384],
+			[166462,820792384],
+			[166482,822274880],
+			[166482,822274880],
+			[166502,823536712],
+			[166502,823536712],
+			[166522,824709576],
+			[166522,824709576],
+			[166542,826157192],
+			[166542,826157192],
+			[166562,827833064],
+			[166562,827833064],
+			[166571,828518504],
+			[166699,828518504],
+			[166719,832306560],
+			[166719,832306560],
+			[166739,833209960],
+			[166739,833209960],
+			[166759,834297176],
+			[166759,834297176],
+			[166779,836130080],
+			[166779,836130080],
+			[166799,837375152],
+			[166799,837375152],
+			[166819,838877920],
+			[166819,838877920],
+			[166839,840830440],
+			[166839,840830440],
+			[166859,842290416],
+			[166859,842290416],
+			[166874,843533712],
+			[166896,843533712],
+			[166916,844824224],
+			[166916,844824224],
+			[166936,846338872],
+			[166936,846338872],
+			[166956,847829192],
+			[166956,847829192],
+			[166976,848841984],
+			[166976,848841984],
+			[166996,850036408],
+			[166996,850036408],
+			[167016,851577584],
+			[167016,851577584],
+			[167036,853008048],
+			[167036,853008048],
+			[167056,854262840],
+			[167056,854262840],
+			[167076,855569376],
+			[167076,855569376],
+			[167096,857185728],
+			[167096,857185728],
+			[167116,858640808],
+			[167116,858640808],
+			[167136,860216856],
+			[167136,860216856],
+			[167156,861897416],
+			[167156,861897416],
+			[167176,863468432],
+			[167176,863468432],
+			[167196,864660072],
+			[167196,864660072],
+			[167216,866387880],
+			[167216,866387880],
+			[167236,867679760],
+			[167236,867679760],
+			[167256,869180720],
+			[167256,869180720],
+			[167275,870645680],
+			[167277,870645680],
+			[167297,871972480],
+			[167297,871972480],
+			[167317,872931936],
+			[167317,872931936],
+			[167337,874667360],
+			[167337,874667360],
+			[167357,876487944],
+			[167357,876487944],
+			[167377,877977880],
+			[167377,877977880],
+			[167397,879667984],
+			[167397,879667984],
+			[167417,880478888],
+			[167417,880478888],
+			[167437,882066968],
+			[167437,882066968],
+			[167457,883682704],
+			[167457,883682704],
+			[167477,884892920],
+			[167477,884892920],
+			[167497,886381160],
+			[167497,886381160],
+			[167517,887984872],
+			[167517,887984872],
+			[167537,889303128],
+			[167537,889303128],
+			[167557,890918360],
+			[167557,890918360],
+			[167577,892311880],
+			[167577,892311880],
+			[167593,893621168],
+			[167598,893621168],
+			[167617,894765096],
+			[167618,894765096],
+			[167638,896545280],
+			[167639,896545280],
+			[167659,897971520],
+			[167659,897971520],
+			[167679,899538888],
+			[167679,899538888],
+			[167687,899097456],
+			[167687,899097456]
+		]
+	},
+	{
+		"name" : "sample SA",
+		"usage" : [
+			[167687,1025975168],
+			[170716,1025975168],
+			[170716,1024926576],
+			[170716,1024926576]
+		]
+	},
+	{
+		"name" : "sample ISA",
+		"usage" : [
+			[170716,1088889728],
+			[175204,1088889728],
+			[175204,1087841136],
+			[175204,1087841136]
+		]
+	},
+	{
+		"name" : "delete temporary files",
+		"usage" : [
+			[175204,1087841136],
+			[175515,1087841136]
+		]
+	}
+]
+;
+var w = window,d = document,e = d.documentElement,g = d.getElementsByTagName('body')[0],
+  xw = w.innerWidth || e.clientWidth || g.clientWidth,
+  yh = w.innerHeight || e.clientHeight || g.clientHeight;
+
+var margin = {top: 20,right: 80,bottom: 120,left: 120},
+  width = xw - margin.left - margin.right,height = yh - margin.top - margin.bottom;
+var x = d3.scale.linear().range([0, width]);
+var y = d3.scale.linear().range([height, 0]);
+var xAxis = d3.svg.axis().scale(x).orient("bottom");
+var yAxis = d3.svg.axis().scale(y).orient("left").ticks(5);
+var color = d3.scale.category10();
+var x_max = d3.max(events, function (d) { return d3.max(d.usage, function (u) { return u[0] / 1000;})})
+var y_max = d3.max(events, function (d) { return d3.max(d.usage, function (u) { return 1.1 * u[1] / (1024 * 1024);})})
+var peak = d3.max(events, function (d) { return d3.max(d.usage, function (u) { return u[1]; })})
+var data = []
+events.forEach(function (d) { data = data.concat(d.usage); });
+var peakelem = data.filter(function (a) { return a[1] == peak; });
+var peakelem = peakelem.splice(0,1);
+x.domain([0, x_max]);
+ y.domain([0, y_max]);
+var svg = d3.select("#visualization").append("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+  .attr("xmlns", "http://www.w3.org/2000/svg")
+  .append("g").attr("transform","translate(" + margin.left + "," + margin.top + ")");
+
+  svg.append("g").attr("class", "xaxis").attr("transform", "translate(0," + height + ")")
+  .call(xAxis).append("text").attr("text-anchor", "end")
+  .attr("shape-rendering", "crispEdges").attr("x", width / 2 + 50).attr("y", 70).attr("shape-rendering", "crispEdges")
+  .attr("font-family", "sans-serif").attr("font-size", "20px").text("Time (seconds)");
+
+svg.append("g").attr("class", "yaxis").call(yAxis).append("text").attr("transform", "rotate(-90)").attr("x", -height / 2 + 50)
+  .attr("y", -80).attr("shape-rendering", "crispEdges").attr("font-family", "sans-serif").attr("font-size", "20px").style("text-anchor", "end")
+  .text("Memory Usage (MiB)");
+
+svg.selectAll(".tick text").style("font-size", "20px");
+svg.selectAll(".xaxis .tick text").attr("dy", 23);
+svg.selectAll(".yaxis .tick text").attr("dx", -10);
+svg.selectAll("line").attr("fill", "none").attr("stroke", "black")
+svg.selectAll("path").attr("fill", "none").attr("stroke", "black")
+
+svg.selectAll("line.horizontalGrid").data(y.ticks(5)).enter().append("line")
+  .attr({"class": "horizontalGrid","x1": 0,"x2": width,"y1": function (d) { return y(d);},
+     "y2": function (d) { return y(d); }, "fill": "none", "shape-rendering": "crispEdges",
+     "stroke": "lightgrey","stroke-dasharray": "10,10","stroke-width": "1.5px"});
+
+var area = d3.svg.area().x(function (d) { return x(d[0] / 1000);}).y0(height).y1(function (d) { return y(d[1] / (1024 * 1024))});
+
+var ev = svg.selectAll(".event").data(events).enter().append("svg:path").attr("class", "area")
+  .attr("fill", function (d) { return d3.rgb(color(d.name)); })
+  .attr("d", function (d) { return area(d.usage) })
+  .style("stroke", function (d) { return d3.rgb(color(d.name)).darker(2);}).style("stroke-width", "2px")
+
+svg.selectAll(".dot").data(peakelem).enter().append("circle").attr("r", 3).attr("fill", "red")
+  .attr("cx", function (d) {return x(d[0] / 1000)})
+  .attr("cy", function (d) {return y(d[1] / (1024 * 1024))})
+  .attr("fill", "red").attr("stroke-width", 2).attr("stroke", "#cc0000")
+
+svg.selectAll(".dot").data(peakelem).enter().append("svg:text")
+  .attr("x", function (d) {return x(d[0] / 1000)}).attr("y", function (d) {return y(d[1] / (1024 * 1024) * 1.025)})
+  .text(function (d) {return "Peak Usage: " + Math.round(d[1] / (1024 * 1024)) + " MB"})
+  .attr("font-size", 12).attr("fill", "red");
+
+svg.selectAll(".dot").data(peakelem).enter().append("circle")
+  .attr("r", 5).attr("fill", "red")
+  .attr("cx", function (d) {return x(d[0] / 1000)})
+  .attr("cy", function (d) {return y(d[1] / (1024 * 1024))})
+  .attr("fill", "none").attr("stroke-width", 2).attr("stroke", "#cc0000").each(pulsepeak());
+
+function pulsepeak() { return function (d, i, j) {
+  d3.select(this).attr("r", 5).style("stroke-opacity", 1.0).transition()
+    .ease("linear").duration(1000).attr("r", 10).style("stroke-opacity", 0.0).each("end", pulsepeak());};}
+
+var vertical = d3.select(".chart").append("div").attr("class", "remove")
+  .style("position", "absolute").style("z-index", "19").style("width", "1px")
+  .style("height", height - margin).style("top", "30px").style("bottom", "50px")
+  .style("left", "0px").style("opacity", "0.4").style("background", "black");
+
+var tooltip = d3.select(".chart").append("div").attr("class", "remove")
+  .style("position", "absolute").style("z-index", "20").style("visibility", "hidden").style("top", "10px");
+
+var circle = svg.append("circle").attr("cx", 100).attr("cy", 350).attr("r", 3).attr("fill", "black").style("opacity", "0")
+
+d3.select("svg").on("mousemove", function () {
+  mousex = d3.mouse(this);
+  if (mousex[0] < margin.left + 3 || mousex[0] >= xw - margin.right) {
+    vertical.style("opacity", "0"); tooltip.style("opacity", "0"); circle.style("opacity", "0")
+  } else {
+    var xvalue = x.invert(mousex[0] - margin.left); var pos = findPosition(xvalue)
+    vertical.style("opacity", "0.4"); tooltip.style("opacity", "1"); circle.style("opacity", "1")
+    circle.attr("cx", pos.x).attr("cy", pos.y); vertical.style("left", mousex[0] + "px");tooltip.style("left", mousex[0] + 15 + "px")
+    tooltip.html("<p>" + xvalue.toFixed(2) + " Seconds <br>" + Math.round(pos.mem) + " MiB <br> " + pos.name +   "<br> Phase Time: " + pos.ptime + " Seconds </p>").style("visibility", "visible");
+  }
+}).on("mouseover", function () {
+  mousex = d3.mouse(this);
+  if (mousex[0] < margin.left + 3 || mousex[0] > xw - margin.right) {
+    vertical.style("opacity", "0")
+  } else {
+    vertical.style("opacity", "0.4");vertical.style("left", mousex[0] + 7 + "px")
+}})
+d3.select("#download").on("click", function () {
+d3.select(this).attr("href", 'data:application/octet-stream;base64,' + btoa(d3.select("#visualization").html())).attr("download", "viz.svg")})
+
+function findPosition(e){correctArea=d3.selectAll(".area").filter(function(t){if(t.usage[0][0]<=e*1e3&&t.usage[t.usage.length-1][0]>=e*1e3){return true}return false});if(correctArea.empty()){return 0}var t=new Array;correctArea[0].forEach(function(n){t.push(findYValueinArea(n,e))});max_elem=d3.max(t,function(e){return e.mem});var n=t.filter(function(e){return e.mem==max_elem});return n[0]}function findYValueinArea(e,t){len=e.getTotalLength();var n=0;var r=len;for(var i=0;i<=len;i+=50){var s=e.getPointAtLength(i);var o=x.invert(s.x);var u=y.invert(s.y);if(u>0&&o>t){n=Math.max(0,i-50);r=i;break}}var a=e.getPointAtLength(0);var f=1;while(n<r){var l=(r+n)/2;a=e.getPointAtLength(l);target_x=x.invert(a.x);if((l==n||l==r)&&Math.abs(target_x-t)>.01){break}if(target_x>t)r=l;else if(target_x<t)n=l;else{break}if(f>50){break}f++}var c=new function(){this.mem=y.invert(a.y);this.name=e.__data__.name;this.min=d3.min(e.__data__.usage,function(e){return e[0]/1e3});this.max=d3.max(e.__data__.usage,function(e){return e[0]/1e3});this.ptime=Math.round(this.max-this.min);this.x=a.x;this.y=a.y};return c}
+</script></body></html>

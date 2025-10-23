@@ -1,0 +1,4 @@
+file,pattern,pattern_length,reps,size,t_mean
+FM_sources200MB,flags,5,58342,248017718,678.844
+FM_dna400MB,TCTTG,5,553697,234380960,272.75
+FM_english1024MB,place,5,196176,1098763985,731.625
