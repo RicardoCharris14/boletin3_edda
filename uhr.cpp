@@ -115,14 +115,14 @@ int main(int argc, char *argv[])
 
     int count, min = 1, max, file = 0, idx_pattern = 0;
 
-    // Experimento en base al largo del texto
-    std::string files[] = {"FM_index/FM_sources200MB.sdsl", "FM_index/FM_dna400MB.sdsl", "FM_index/FM_english1024MB.sdsl"};
-    std::string patterns[] = {"flags", "TCTTG", "place"};
+    // // Experimento en base al largo del texto
+    // std::string files[] = {"FM_index/FM_sources200MB.sdsl", "FM_index/FM_dna400MB.sdsl", "FM_index/FM_english1024MB.sdsl"};
+    // std::string patterns[] = {"flags", "TCTTG", "place"};
 
-    // // Experimento en base al largo del patron
-    // std::string files[] = {"FM_index/FM_english1024MB.sdsl"};
-    // std::string patterns[] = {"place", "These are ", "those playing a", "where wraps were che",
-    // "alcoholically boastful of", " been swung from the ceilings."};
+    // Experimento en base al largo del patron
+    std::string files[] = {"FM_index/FM_english1024MB.sdsl"};
+    std::string patterns[] = {"place", "These are ", "those playing a", "where wraps were che",
+    "alcoholically boastful of", " been swung from the ceilings."};
 
     max = std::size(patterns);
 
