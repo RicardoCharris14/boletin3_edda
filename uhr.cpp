@@ -113,16 +113,29 @@ int main(int argc, char *argv[])
     std::cout << "\033[0;36mRunning tests...\033[0m" << std::endl << std::endl;
     executed_runs = 0;
 
-    int count, min = 1, max, file = 0, idx_pattern = 0;
+    int min = 1, max, file = 0, idx_pattern = 0;
+    size_t count;
 
-    // // Experimento en base al largo del texto
+    // Experimento en base al largo del texto
+
+    // // FM-index
     // std::string files[] = {"FM_index/FM_sources200MB.sdsl", "FM_index/FM_dna400MB.sdsl", "FM_index/FM_english1024MB.sdsl"};
-    // std::string patterns[] = {"flags", "TCTTG", "place"};
 
-    // Experimento en base al largo del patron
-    std::string files[] = {"FM_index/FM_english1024MB.sdsl"};
-    std::string patterns[] = {"place", "These are ", "those playing a", "where wraps were che",
-    "alcoholically boastful of", " been swung from the ceilings."};
+    // Rabin-Karp
+    std::string files[] = {"texts/sources200MB.txt", "texts/dna400MB.txt", "texts/english1024MB.txt"};
+
+    std::string patterns[] = {"flags", "TCTTG", "place"};
+
+    // // Experimento en base al largo del patron
+
+    // // // FM-index
+    // // std::string files[] = {"FM_index/FM_english1024MB.sdsl"};
+
+    // // Rabin-Karp
+    // std::string files[] = {"texts/english1024MB.txt"};
+
+    // std::string patterns[] = {"place", "These are ", "those playing a", "where wraps were che",
+    // "alcoholically boastful of", " been swung from the ceilings."};
 
     max = std::size(patterns);
 
@@ -132,8 +145,15 @@ int main(int argc, char *argv[])
     for (n = min; n <= max; n += 1) {
         mean_time = 0;
         // Test configuration goes here
-        std::string first_part = "FM_index/";
-        std::string last_part = ".sdsl";
+
+        // // FM-index
+        // std::string first_part = "FM_index/";
+        // std::string last_part = ".sdsl";
+
+        // Rabin-Karp
+        std::string first_part = "texts/";
+        std::string last_part = ".txt";
+
         std::string file_name = files[file];
         file_name = file_name.erase(file_name.find(first_part), first_part.length());
         file_name = file_name.erase(file_name.find(last_part), last_part.length());

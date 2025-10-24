@@ -30,9 +30,8 @@ private:
     }
 
     // convert character to int 
-    // ('a' = 1, ..., 'z' = 26)
     int charToInt(char c) {
-        return c - 'a' + 1;
+        return c;
     }
 
 public:
@@ -74,7 +73,10 @@ vector<int> searchPattern(string &text, string &pattern) {
     for (int i = 0; i <= n - m; i++) {
         int subHash = textHash.getSubHash(i, i + m - 1);
         if (subHash == patternHash) {
-            result.push_back(i);
+            std::string_view text_match_view(text.data() + i, m);
+            if (text_match_view == pattern){
+                result.push_back(i);
+            }
         }
     }
 

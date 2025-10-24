@@ -1,0 +1,4 @@
+file,pattern,pattern_length,reps,t_mean
+sources200MB,flags,5,58342,2.86553e+09
+dna400MB,TCTTG,5,553697,5.5431e+09
+english1024MB,place,5,196176,1.92759e+10
